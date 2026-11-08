@@ -29,10 +29,13 @@ public class Punteggio {
 
     /**
      * Una partita nuova, 0 a 0, con la sua regola per vincere.
-     * Pretende: puntiPerVincere è almeno 1; scartoMinimo è almeno 1.
-     * Promette: una partita 0 a 0, non finita, senza vincitore e con la storia vuota.
+     * Pretende: niente.
+     * Promette: una partita 0 a 0, non finita, senza vincitore e con la storia
+     * vuota, come prima. Lancia `IllegalArgumentException` se `puntiPerVincere` è
+     * minore di 1 o `scartoMinimo` è minore di 1.
      */
     public Punteggio(int puntiPerVincere, int scartoMinimo) {
+        
 
         if(puntiPerVincere > 0 && scartoMinimo > 0){
             this.puntiDestra = 0;
@@ -40,6 +43,13 @@ public class Punteggio {
             this.puntiPerVincere = puntiPerVincere;
             this.scartoPerVincere = scartoMinimo;
             this.storico = new ArrayList<>();
+        }
+            
+
+        if(puntiPerVincere<1 || scartoMinimo < 1){
+            throw new   IllegalArgumentException(
+                "punti per vincere"+puntiPerVincere + "e scarto minimo:" + scartoMinimo + "sono invalidi."
+            );
         }
     }
 
@@ -68,6 +78,11 @@ public class Punteggio {
                 }
             }
         }
+        
+
+        if(chi == null){
+            throw new IllegalArgumentException("chi è null (errore!)");
+        }
     }
 
     /**
@@ -76,6 +91,11 @@ public class Punteggio {
      */
     public int getPunti(Lato chi) {
 
+        if (chi == null) {
+            throw new IllegalArgumentException("chi è null (errore!)");
+        }
+
+        
         if(chi != null){
 
             if(chi == Lato.DESTRA){
@@ -86,6 +106,9 @@ public class Punteggio {
             }
         } 
         return 0;
+        
+
+
     }
 
 
@@ -190,5 +213,10 @@ public class Punteggio {
         this.puntiDestra = 0;
         this.puntiSinistra = 0;
         this.storico = new ArrayList<>();
+    }
+
+
+    boolean repOK() {
+        return true; // da scrivere
     }
 }
